@@ -1,0 +1,16 @@
+﻿@model Position
+
+@{
+    ViewData["Title"] = "New user creation";
+}
+<div class="container"> 
+    <form class="form-group" asp-controller="Position" asp-action="Create" method="post">
+        <div class="form-group">
+            <label for="Name">Name</label>
+            <input name="Title" placeholder="Name Position" />
+        </div>
+        <div class="form-control">
+            <input class="btn btn-link" type="submit" value="submit" />
+        </div>
+    </form>
+</div>

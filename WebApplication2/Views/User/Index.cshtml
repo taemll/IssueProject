@@ -1,0 +1,92 @@
+﻿@model IEnumerable<User>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<div id="modDialog" class="modal fade" >
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+<div class="container">
+    <h2>List of users</h2>
+    <div class="form-group">
+        <div class="modal" id="exampleModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <h4>BLAH BLAH BLAH</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Dropdown button
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" asp-action="Index" asp-controller="User" asp-route-id="0">Показать всех</a></li>
+                    @foreach(var position in (IEnumerable<Position>)ViewBag.Positions)
+                    {
+                        <li><a class="dropdown-item" asp-action="Index" asp-controller="User" asp-route-id="@position.Id">@position.Title</a></li>
+                    }
+                </ul>
+            </div>
+        </div> 
+
+        <a class="btn btn-link" asp-controller="User" asp-action="Create" >Create new user</a>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">LastName</th>
+                    <th scope="col">Position</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                
+
+                    <tr>
+                        <th>@user.Id</th>
+                        <td>@user.Name</td>
+                        <td>@user.LastName</td>
+                        <td>@user.Position?.Title</td>
+                        <form class="form-group" asp-controller="User" asp-action="Delete" method="post" asp-route-id="@user.Id">
+                        <td>
+                            <a class="btn btn-link" asp-controller="User" asp-action="Edit" asp-route-id="@user.Id">Edit User</a>|
+                            @Html.ActionLink("Details","Details",new { id = user.Id }, new { @class = "compItem" }) |
+                            <input type="submit" value="Delete" class="btn btn-link">
+                            <div>
+
+                            </div>
+                        </td>
+                        
+                        </form>
+                    </tr>
+                }
+                
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(function () {
+            $.ajaxSetup({ cache: false });
+           $(".compItem").click(function (e) {
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
+            });
+        })
+    </script>
+}

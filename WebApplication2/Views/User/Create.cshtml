@@ -1,0 +1,33 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "New user creation";
+}
+
+
+<div class="container">
+    <form class="form-group" asp-controller="User" asp-action="Create" method="post">
+        <div class="form-group">
+            <label for="Name">Name</label>
+            <input class="form-control" name="Name" placeholder="Name" />
+        </div>
+        <div class="form-group">
+            <label for="Lastname">LastName</label>
+            <input class="form-control" name="LastName" placeholder="Lastname" />
+        </div>
+        <div class="form-group">
+            <label for="PositionId">Choose position</label>
+            <select class="form-control" name="PositionId">
+                @foreach (var positions in (IEnumerable<Position>)ViewBag.Positions)
+                 {
+                    <option value="@positions.Id">
+                        @positions.Title
+                    </option>
+                 }
+            </select>
+        </div>
+        <div class="form-group">
+            <input class="btn btn-link" type="submit" value="Submit" />
+        </div>
+    </form>
+</div>

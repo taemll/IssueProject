@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Position>
+
+@{
+    ViewData["Title"] = "Positions";
+}
+<div class="container">
+    <h2>List of users</h2>
+    <a class="btn btn-link" asp-controller="Position" asp-action="Create">Create new Position</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var position in Model)
+            {
+                <tr>
+                    <th>@position.Id</th>
+                    <td>@position.Title</td>
+                    <form class="form-group" asp-controller="Position" asp-action="Delete" method="post" asp-route-id="@position.Id">
+                    <td>
+                        <a class="btn btn-link" asp-controller="Position" asp-action="Edit" asp-route-id="@position.Id">Edit Position</a>|
+                        <input type="submit" value="Delete" class="btn btn-link">
+                    </td>
+                    </form>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+</div>
